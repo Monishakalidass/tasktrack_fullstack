@@ -1,0 +1,74 @@
+<app-header></app-header>
+
+<div class="min-h-screen bg-zinc-950 p-6">
+  <div class="max-w-5xl mx-auto">
+    
+    <app-back-button label="Back to Dashboard"></app-back-button>
+
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold text-white tracking-tight">User Approvals</h1>
+      <p class="text-zinc-500 text-sm">Reviewing inactive users from the database.</p>
+    </div>
+
+    <div class="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl">
+      <table *ngIf="inactiveUsers.length > 0; else noData" class="w-full text-left text-sm">
+        <thead class="bg-zinc-800/50 text-zinc-400 uppercase text-[10px] font-black tracking-widest">
+          <tr>
+            <th class="px-6 py-4">User Details</th>
+            <th class="px-6 py-4">Department</th>
+            <th class="px-6 py-4">Status</th>
+            <th class="px-6 py-4 text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-zinc-800">
+          <tr *ngFor="let user of inactiveUsers" class="hover:bg-zinc-800/40 transition-colors">
+            <td class="px-6 py-4">
+              <div class="font-bold text-zinc-100">{{user.userName}}</div>
+              <div class="text-zinc-500 text-xs">{{user.email}}</div>
+            </td>
+            <td class="px-6 py-4 text-zinc-400">{{user.department}}</td>
+            <td class="px-6 py-4">
+              <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[10px] font-bold">
+                {{user.status}}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <button (click)="openActivationModal(user)" 
+                      class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition-all shadow-lg shadow-indigo-600/10">
+                Activate
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noData>
+        <div class="py-20 text-center">
+          <p class="text-zinc-500 font-medium italic">
+            {{ isLoading ? 'Synchronizing with server...' : 'No users currently awaiting approval.' }}
+          </p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedUser" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+  <div class="bg-zinc-900 border border-zinc-800 w-full max-w-sm rounded-2xl p-6 shadow-2xl">
+    <h2 class="text-xl font-bold text-white mb-2">Set Permissions</h2>
+    <p class="text-zinc-500 text-xs mb-6">Assign a role to activate {{selectedUser.userName}}'s account.</p>
+    
+    <form [formGroup]="activationForm" (ngSubmit)="confirmActivation()">
+      <div class="mb-6">
+        <label class="block text-[10px] font-bold text-zinc-500 uppercase mb-2 ml-1 tracking-widest">System Role</label>
+        <select formControlName="role" class="w-full bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white outline-none focus:border-indigo-500">
+          <option *ngFor="let r of roles" [value]="r">{{r}}</option>
+        </select>
+      </div>
+      <div class="flex gap-3">
+        <button type="button" (click)="closeModal()" class="flex-1 py-3 bg-zinc-800 text-white rounded-xl text-xs font-bold hover:bg-zinc-700 transition-colors">CANCEL</button>
+        <button type="submit" [disabled]="activationForm.invalid" class="flex-1 py-3 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-500 disabled:opacity-50 transition-all">APPROVE</button>
+      </div>
+    </form>
+  </div>
+</div>

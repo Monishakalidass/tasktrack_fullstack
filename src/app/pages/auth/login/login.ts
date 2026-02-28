@@ -1,9 +1,51 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../../core/services/auth.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [CommonModule,ReactiveFormsModule,RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {}
+export class LoginComponent {
+  loginForm: FormGroup;
+
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
+  }
+
+ onLogin() {
+  if (this.loginForm.valid) {
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        // 1. Get the role from the token we just saved
+        const role = this.authService.getRoleFromToken();
+        console.log('Login Successful! User Role:', role);
+
+        // 2. Navigation logic based on your Backend Role names
+        if (role === 'ADMIN') {
+          this.router.navigate(['admin/dashboard']);
+        } else if (role === 'MANAGER') {
+          this.router.navigate(['/manager/dashboard']);
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
+      },
+      error: (err) => {
+        console.error('Login Error:', err);
+        alert(err.error?.message || 'Login failed. Please check your credentials.');
+      }
+    });
+  }
+}
+}
