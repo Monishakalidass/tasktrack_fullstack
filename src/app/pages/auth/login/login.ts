@@ -34,9 +34,9 @@ export class LoginComponent {
 
         // 2. Navigation logic based on your Backend Role names
         if (role === 'ADMIN') {
-          this.router.navigate(['admin/dashboard']);
+          this.router.navigate(['admin/']);
         } else if (role === 'MANAGER') {
-          this.router.navigate(['/manager/dashboard']);
+          this.router.navigate(['manager/']);
         } else {
           this.router.navigate(['/dashboard']);
         }

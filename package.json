@@ -11,14 +11,19 @@
   "private": true,
   "packageManager": "npm@11.6.2",
   "dependencies": {
+    "@angular/cdk": "~21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/compiler": "^21.2.0",
     "@angular/core": "^21.2.0",
     "@angular/forms": "^21.2.0",
     "@angular/platform-browser": "^21.2.0",
     "@angular/router": "^21.2.0",
+    "@hackernoon/pixel-icon-library": "^1.0.6",
+    "@primeuix/themes": "^2.0.3",
     "jwt-decode": "^4.0.0",
+    "primeng": "^21.1.1",
     "rxjs": "~7.8.0",
+    "tailwindcss-primeui": "^0.6.1",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

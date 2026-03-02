@@ -20,7 +20,7 @@ export const routes: Routes = [
     data: { roles: [Role.ADMIN] },
     children: [
       { 
-        path: 'dashboard', 
+        path: '', 
         loadComponent: () => import('./pages/dashboard/admin/admin-dashboard').then(m => m.AdminDashboardComponent) 
       },
       { 
@@ -35,18 +35,36 @@ export const routes: Routes = [
   },
 
   
-//   {
-//     path: 'manager',
-//     canActivate: [authGuard],
-//     data: { roles: [Role.MANAGER, Role.ADMIN] },
-//     children: [
-//       { 
-//         path: 'tasks', 
-//         // Ensure this path matches your actual folder/file name exactly
-//         loadComponent: () => import('./pages/dashboard/manager/task-management').then(m => m.TaskManagementComponent) 
-//       }
-//     ]
-//   },
+  {
+    path: 'manager',
+    canActivate: [authGuard],
+    data: { roles: [Role.MANAGER] },
+    children: [
+      { 
+        path: '', 
+        // Ensure this path matches your actual folder/file name exactly
+        loadComponent: () => import('./pages/dashboard/manager/manager-dashboard').then(m => m.Manager) 
+      },
+            { 
+        path: 'workflows', 
+        // Ensure this path matches your actual folder/file name exactly
+        loadComponent: () => import('./pages/dashboard/manager/dashboard/manager/workflow/view-all/view-all').then(m => m.ViewAll) 
+      },
+              { 
+        path: 'workflows/new', 
+        // Ensure this path matches your actual folder/file name exactly
+        // redirectTo: "workflows"
+        loadComponent: () => import('./pages/dashboard/manager/dashboard/manager/workflow/create-new-workflow/create-new-workflow').then(m => m.CreateNewWorkflow) 
+      },
+          { 
+        path: 'workflows/:workflowId', 
+        // Ensure this path matches your actual folder/file name exactly
+        redirectTo: "workflows"
+        // loadComponent: () => import('./pages/dashboard/manager/dashboard/manager/workflow/view-all/view-all').then(m => m.ViewAll) 
+      },
+
+    ]
+  },
 
   //  CATCH-ALLS
   { path: '', redirectTo: 'login', pathMatch: 'full' },

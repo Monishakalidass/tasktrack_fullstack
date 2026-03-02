@@ -1,0 +1,93 @@
+
+<app-header></app-header>
+
+<div class="min-h-screen bg-white dark:bg-zinc-950 p-6">
+  
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-slate-800 dark:text-zinc-100 mb-6">Manage Workflows</h1>
+    
+    <div class="flex items-center justify-between gap-4">
+      <a routerLink="/manager/workflows/new" class="group flex items-center gap-2 px-5 py-2.5 text-sm font-semibold transition-all rounded-full border bg-slate-100 border-slate-200 text-slate-600 hover:border-indigo-400 hover:text-indigo-600 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-indigo-500/50 dark:hover:text-white shadow-sm active:scale-95">
+
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Create New Workflow
+      </a>
+
+
+    </div>
+  </div>
+
+  <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
+    <div class="overflow-x-auto">
+     
+@if (isLoading) {
+  <div class="flex items-center justify-center min-h-screen">
+    <p class="text-lg text-slate-600 dark:text-zinc-400">Loading workflows...</p>
+  </div>
+} @else if (workflows.length === 0) {
+  <div class="flex items-center justify-center min-h-screen">
+    <p class="text-lg text-slate-600 dark:text-zinc-400">No workflows found</p>
+  </div>
+} @else {
+  <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="border-b border-slate-200 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-800/50">
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Workflow Name</th>
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Steps</th>
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Current Step</th>
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Status</th>
+            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Steps Details</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-zinc-800">
+          @for (workflow of workflows; track workflow.workflowId) {
+            <tr class="hover:bg-slate-50/50 dark:hover:bg-zinc-800/30 transition-colors">
+              <td class="px-6 py-5 text-sm font-medium text-slate-700 dark:text-zinc-200">
+                <a [routerLink]="['/manager/workflows', workflow.workflowId]" class="hover:text-indigo-600 underline decoration-dotted transition-colors">
+                  {{workflow.workflowName}}
+                </a>
+              </td>
+              
+              <td class="px-6 py-5 text-sm text-slate-600 dark:text-zinc-400">
+                {{workflow.workflowSteps.length}} steps
+              </td>
+
+              <td class="px-6 py-5 text-sm text-slate-600 dark:text-zinc-400">
+                <span class="font-semibold text-indigo-500 dark:text-indigo-400">
+                  {{ workflow.workflowSteps[workflow.currentStep]?.stepName || 'N/A' }}
+                </span>
+              </td>
+
+              <td class="px-6 py-5">
+                <span [class.bg-amber-100]="workflow.status === 'PENDING'"
+                      [class.text-amber-700]="workflow.status === 'PENDING'"
+                      [class.bg-emerald-100]="workflow.status === 'COMPLETED'"
+                      [class.text-emerald-700]="workflow.status === 'COMPLETED'"
+                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 dark:bg-zinc-800 dark:text-zinc-300">
+                  {{workflow.status}}
+                </span>
+              </td>
+
+              <td class="w-60 px-6 py-5 text-sm text-slate-500 dark:text-zinc-500 ">
+                <ul class="space-y-1 list-decimal list-inside">
+                  @for (workflowStep of workflow.workflowSteps; track workflowStep.workflowStepId) {
+                    <li [class.text-indigo-600]="workflowStep.status === 'IN_PROGRESS'" 
+                        class="transition-colors">
+                      {{workflowStep.stepName}}
+                    </li>
+                  }
+                </ul>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+}
+
+    </div>
+  </div>
+</div>

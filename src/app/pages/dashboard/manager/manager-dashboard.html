@@ -1,6 +1,35 @@
-<div class="p-8 bg-slate-50 min-h-screen">
-  <h1 class="text-3xl font-bold text-slate-800">Manager Command Center</h1>
-  <p class="text-slate-600 mt-2">Welcome back! Here is the system overview.</p>
-  
-  
-</div>
+
+<app-header></app-header>
+<main class="p-5 bg-white dark:bg-zinc-950 min-h-screen transition-colors">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    @for (c of allComponents; track c.name) {
+      <div class="flex flex-col justify-between rounded-xl border border-slate-200 bg-white shadow-sm transition-all 
+                  hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700">
+        
+        <div class="p-5">
+          <h3 class="text-lg font-semibold text-slate-900 dark:text-zinc-100 leading-tight">
+            {{c.name}}
+          </h3>
+          <p class="mt-2 text-sm text-slate-500 dark:text-zinc-400">
+            {{c.componentDescription}}
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-2 border-t border-slate-100 p-4 bg-slate-50/50 rounded-b-xl 
+                    dark:border-zinc-800 dark:bg-zinc-900/50">
+          @for (link of c.links; track link.href) {
+            <a 
+              [routerLink]="link.href"
+              class="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors
+                     bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 
+                     dark:bg-zinc-800 dark:text-zinc-200 dark:border-zinc-700 dark:hover:bg-zinc-700 dark:hover:text-white"
+            >
+              {{link.name}}
+            </a>
+          }
+        </div>
+        
+      </div>
+    }
+  </div>
+</main>
