@@ -32,6 +32,16 @@ export interface UserDTO {
   department:  string; // Keeping it flexible but noting IT as the default
 }
 
+export interface NewWorkflowDTO {
+  workflowTemplateId: number|null;
+  workflowName: string
+}
+
+export interface UpdateWorkflowStepRequest {
+  stepStatus: WorkflowStepStatus;
+  taskId?: number | null|any;
+  message?: string;
+}
 export interface SubTaskDTO {
   subTaskId: number;
   status: Status;

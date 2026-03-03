@@ -1,97 +1,97 @@
-
 <app-header></app-header>
 
-<div class="min-h-screen bg-white dark:bg-zinc-950 p-6">
+<div class="min-h-screen bg-zinc-50 dark:bg-zinc-950 p-6 md:p-10 transition-colors duration-500">
   
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-slate-800 dark:text-zinc-100 mb-6">Manage Workflows</h1>
-    
-    <div class="flex items-center justify-between gap-4">
-      <a routerLink="/manager/workflows/new" class="group flex items-center gap-2 px-5 py-2.5 text-sm font-semibold transition-all rounded-full border bg-slate-100 border-slate-200 text-slate-600 hover:border-indigo-400 hover:text-indigo-600 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-400 dark:hover:border-indigo-500/50 dark:hover:text-white shadow-sm active:scale-95">
+  <div class="max-w-7xl mx-auto mb-12">
+    <header class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+      <div class="space-y-2">
+        <nav class="flex items-center gap-2 text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] mb-4">
+          
+          <a routerLink="/manager">Dashboard</a>
+          <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 5l7 7-7 7" stroke-width="3"/></svg>
+          <span class="text-zinc-400 dark:text-zinc-500">Workflow Management</span>
+        </nav>
+        <h1 class="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white tracking-tighter uppercase">
+          Workflows
+        </h1>
+      </div>
 
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      <a routerLink="/manager/workflows/new" 
+         class="group flex items-center gap-3 px-8 py-4 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-[11px] font-black uppercase tracking-[0.15em] rounded-2xl transition-all hover:scale-[1.02] active:scale-95 shadow-xl shadow-zinc-200 dark:shadow-none">
+        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="3"><path d="M12 4v16m8-8H4"/></svg>
         Create New Workflow
       </a>
+    </header>
 
-
-    </div>
-  </div>
-
-  <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
-    <div class="overflow-x-auto">
-     
-@if (isLoading) {
-  <div class="flex items-center justify-center min-h-screen">
-    <p class="text-lg text-slate-600 dark:text-zinc-400">Loading workflows...</p>
-  </div>
-} @else if (workflows.length === 0) {
-  <div class="flex items-center justify-center min-h-screen">
-    <p class="text-lg text-slate-600 dark:text-zinc-400">No workflows found</p>
-  </div>
-} @else {
-  <div class="overflow-hidden rounded-xl border border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm">
-    <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="border-b border-slate-200 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-800/50">
-            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Workflow Name</th>
-            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Steps</th>
-            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Current Step</th>
-            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Status</th>
-            <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Steps Details</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 dark:divide-zinc-800">
-          @for (workflow of workflows; track workflow.workflowId) {
-            <tr class="hover:bg-slate-50/50 dark:hover:bg-zinc-800/30 transition-colors">
-              <td class="px-6 py-5 text-sm font-medium text-slate-700 dark:text-zinc-200">
-                <a [routerLink]="['/manager/workflows', workflow.workflowId]" class="hover:text-indigo-600 underline decoration-dotted transition-colors">
+    @if (isLoading) {
+      <div class="space-y-4 animate-pulse">
+        @for (i of [1,2,3]; track i) {
+          <div class="h-24 bg-zinc-200 dark:bg-zinc-800 rounded-[2rem]"></div>
+        }
+      </div>
+    } @else if (workflows.length === 0) {
+      <div class="flex flex-col items-center justify-center py-24 bg-white dark:bg-zinc-900 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-[3rem] text-center">
+        <div class="w-20 h-20 bg-zinc-50 dark:bg-zinc-800 rounded-3xl flex items-center justify-center mb-6 text-zinc-300">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        </div>
+        <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">No workflows found</h3>
+        <p class="text-zinc-500 dark:text-zinc-400 mt-2 text-sm">Initialize your first automation pipeline to get started.</p>
+      </div>
+    } @else {
+      <div class="grid gap-4">
+        @for (workflow of workflows; track workflow.workflowId) {
+          <div class="group relative bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-1 rounded-[2.5rem] transition-all hover:border-indigo-500/50 hover:shadow-[0_20px_50px_rgba(0,0,0,0.04)]">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between p-6 lg:p-8 gap-8">
+              
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-indigo-100 dark:border-indigo-500/20">
+                    ID: {{workflow.workflowId.toString().padStart(3, '0')}}
+                  </span>
+                  <span [class]="'px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ' + 
+                    (workflow.status === 'COMPLETED' ? 'bg-emerald-50 border-emerald-100 text-emerald-600 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:text-emerald-400' : 'bg-amber-50 border-amber-100 text-amber-600 dark:bg-amber-500/10 dark:border-amber-500/20 dark:text-amber-400')">
+                    {{workflow.status}}
+                  </span>
+                </div>
+                <a [routerLink]="['/manager/workflows', workflow.workflowId]" 
+                   class="text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter hover:text-indigo-500 transition-colors">
                   {{workflow.workflowName}}
                 </a>
-              </td>
-              
-              <td class="px-6 py-5 text-sm text-slate-600 dark:text-zinc-400">
-                {{workflow.workflowSteps.length}} steps
-              </td>
+              </div>
 
-              <td class="px-6 py-5 text-sm text-slate-600 dark:text-zinc-400">
-                <span class="font-semibold text-indigo-500 dark:text-indigo-400">
-                  {{ workflow.workflowSteps.find(el => el.workflowStepId === workflow.currentStep)?.stepName  || "N/A"}}
-                </span>
-              </td>
-
-              <td class="px-6 py-5">
-                <span [class.bg-amber-100]="workflow.status === 'PENDING'"
-                      [class.text-amber-700]="workflow.status === 'PENDING'"
-                      [class.bg-emerald-100]="workflow.status === 'COMPLETED'"
-                      [class.text-emerald-700]="workflow.status === 'COMPLETED'"
-                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-800 dark:bg-zinc-800 dark:text-zinc-300">
-                  {{workflow.status}}
-                </span>
-              </td>
-
-              <td class="w-60 px-6 py-5 text-sm text-slate-500 dark:text-zinc-500 ">
-                <ul class="space-y-1 list-decimal list-inside">
-                  @for (workflowStep of workflow.workflowSteps; track workflowStep.workflowStepId) {
-                    <li [class.text-grey-600]="workflowStep.status === 'PENDING'" 
-
-                    [class.text-green-600]="workflowStep.status === 'APPROVED'" 
-
-                    [class.text-red-600]="workflowStep.status === 'REJECTED'" 
-                        class="transition-colors">
-                      {{workflowStep.stepName}}
-                    </li>
+              <div class="flex items-center gap-6 overflow-x-auto pb-2 lg:pb-0 no-scrollbar">
+                <div class="flex -space-x-2">
+                  @for (step of workflow.workflowSteps; track step.workflowStepId) {
+                    <div [title]="step.stepName"
+                         [class]="'w-10 h-10 rounded-xl border-4 border-white dark:border-zinc-900 flex items-center justify-center text-[10px] font-black transition-transform hover:-translate-y-1 ' + 
+                         (step.status === 'APPROVED' ? 'bg-emerald-500 text-white' : step.status === 'REJECTED' ? 'bg-rose-500 text-white' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-500')">
+                      {{ $index + 1 }}
+                    </div>
                   }
-                </ul>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </div>
-}
+                </div>
+                <div class="flex flex-col">
+                  <span class="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Active Phase</span>
+                  <span class="text-sm font-bold text-zinc-800 dark:text-zinc-200">
+                    {{ workflow.workflowSteps.find(el => el.workflowStepId === workflow.currentStep)?.stepName || "Not Started"}}
+                  </span>
+                </div>
+              </div>
 
-    </div>
+              <div class="flex items-center gap-4 border-t lg:border-t-0 pt-6 lg:pt-0 border-zinc-100 dark:border-zinc-800">
+                <div class="text-right mr-4 hidden sm:block">
+                  <span class="block text-[10px] font-black text-zinc-400 uppercase tracking-widest">Complexity</span>
+                  <span class="text-sm font-bold text-zinc-800 dark:text-zinc-200">{{workflow.workflowSteps.length}} Total Steps</span>
+                </div>
+                <a [routerLink]="['/manager/workflows', workflow.workflowId]" 
+                   class="flex items-center justify-center w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white hover:bg-indigo-600 hover:text-white transition-all">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        }
+      </div>
+    }
   </div>
 </div>
