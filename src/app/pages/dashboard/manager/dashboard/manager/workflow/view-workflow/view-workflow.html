@@ -1,241 +1,220 @@
 <app-header></app-header>
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-zinc-950 dark:to-zinc-900 p-8">
-@if (isLoading()) {
-  <div class="animate-pulse">
-    <div class="mb-8 space-y-3">
-      <div class="h-10 w-72 bg-slate-200 dark:bg-zinc-800 rounded-lg"></div>
-      <div class="h-6 w-32 bg-slate-100 dark:bg-zinc-800/50 rounded-md"></div>
+<div class="min-h-screen bg-zinc-50 dark:bg-zinc-950 p-6 md:p-10 transition-colors duration-500">
+  @if (isLoading()) {
+    <div class="max-w-7xl mx-auto animate-pulse space-y-10">
+      <div class="space-y-4">
+        <div class="h-12 w-1/3 bg-zinc-200 dark:bg-zinc-800 rounded-2xl"></div>
+        <div class="h-6 w-48 bg-zinc-100 dark:bg-zinc-800/50 rounded-xl"></div>
+      </div>
+      <div class="h-[500px] w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[2.5rem]"></div>
     </div>
-
-    <div class="border border-slate-300 dark:border-zinc-700 rounded-2xl p-8 bg-white dark:bg-zinc-900 shadow-lg">
-      <div class="flex gap-8 mb-8 border-b border-slate-200 dark:border-zinc-800 pb-6">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-zinc-800"></div>
-          <div class="h-5 w-40 bg-slate-200 dark:bg-zinc-800 rounded"></div>
-        </div>
-        <div class="flex items-center gap-3 opacity-50">
-          <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-zinc-800"></div>
-          <div class="h-5 w-40 bg-slate-100 dark:bg-zinc-800 rounded"></div>
-        </div>
-      </div>
-
-      <div class="mt-6 p-8 bg-gradient-to-br from-indigo-50/50 to-blue-50/50 dark:from-zinc-800/30 dark:to-zinc-900/30 border border-indigo-100 dark:border-zinc-700 rounded-2xl">
-        <div class="flex justify-between items-center mb-8">
-          <div class="h-6 w-56 bg-slate-300 dark:bg-zinc-700 rounded"></div>
-          <div class="h-10 w-28 bg-indigo-300 dark:bg-indigo-700 rounded-lg"></div>
-        </div>
-
-        <div class="flex gap-6 overflow-hidden">
-          @for (i of [1, 2, 3]; track i) {
-            <div class="min-w-[320px] bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl p-5 shadow-md hover:shadow-lg transition-shadow">
-              <div class="flex justify-between items-start mb-4">
-                <div class="h-6 w-36 bg-slate-200 dark:bg-zinc-700 rounded"></div>
-                <div class="h-5 w-14 bg-indigo-200 dark:bg-indigo-700 rounded"></div>
-              </div>
-              <div class="space-y-3 mb-6">
-                <div class="h-4 w-full bg-slate-100 dark:bg-zinc-700/50 rounded"></div>
-                <div class="h-4 w-5/6 bg-slate-100 dark:bg-zinc-700/50 rounded"></div>
-              </div>
-              <div class="pt-4 border-t border-slate-100 dark:border-zinc-700 space-y-2">
-                <div class="flex justify-between">
-                  <div class="h-3 w-20 bg-slate-100 dark:bg-zinc-700/50 rounded"></div>
-                  <div class="h-3 w-24 bg-slate-100 dark:bg-zinc-700/50 rounded"></div>
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-      </div>
-
-      <div class="mt-8 flex gap-8 mb-8 border-b border-slate-200 dark:border-zinc-800 pb-6">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-zinc-800"></div>
-          <div class="h-5 w-40 bg-slate-200 dark:bg-zinc-800 rounded"></div>
-        </div>
-        <div class="flex items-center gap-3 opacity-50">
-          <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-zinc-800"></div>
-          <div class="h-5 w-40 bg-slate-100 dark:bg-zinc-800 rounded"></div>
-        </div>
-      </div>
-
-      <div class="mt-8 flex gap-8 mb-8 border-b border-slate-200 dark:border-zinc-800 pb-6">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-zinc-800"></div>
-          <div class="h-5 w-40 bg-slate-200 dark:bg-zinc-800 rounded"></div>
-        </div>
-        <div class="flex items-center gap-3 opacity-50">
-          <div class="w-10 h-10 rounded-full bg-slate-100 dark:bg-zinc-800"></div>
-          <div class="h-5 w-40 bg-slate-100 dark:bg-zinc-800 rounded"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-} @else {
-  @if (workflow(); as wf) {
-    <div class="mb-8 space-y-4">
-      <div class="flex items-baseline justify-between">
-        <h1 class="text-4xl font-bold text-slate-900 dark:text-zinc-50 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">{{ wf.workflowName }}</h1>
-      </div>
-      
-      <div class="flex items-center justify-between gap-4">
-        <span [class]="'inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border-2 ' + workflowStatus.class">
-          {{ workflowStatus.label }}
-        </span>
-             <div class="flex flex-col items-center justify-between gap-4">
-        <h3 class="text-2xl font-bold text-slate-900 dark:text-zinc-50 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">All Assignees</h3>
-        <ul class="it">
-            @for (i of allAssigness(); track i.userId) {
-                <li><div class="flex flex-col">
-                    {{i.userName}}
-                </div></li>
-              
-            }
-        </ul>
-      </div>
-      </div>
-
-
-    </div>
-
-    <div class="card bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-lg rounded-2xl p-8">
-      <p-stepper [value]="currentIndex()" class="custom-stepper">
-        @for (workflowStep of wf.workflowSteps; track $index) {
-          <p-step-item [value]="$index + 1" class="step-item">
-            <p-step class="flex items-center justify-between">
-              <span class="text-lg font-semibold text-slate-700 dark:text-zinc-200">{{ workflowStep.stepName }} </span>
-              <span [class]="'inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ' +  workflowStepStatusConfig[workflowStep.status].class">
-                {{ workflowStepStatusConfig[workflowStep.status].label }} 
+  } @else {
+    @if (workflow(); as wf) {
+      <div class="max-w-7xl mx-auto space-y-8">
+        
+        <header class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div class="space-y-2">
+            <nav class="flex items-center gap-2 text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] mb-4">
+             
+              <a routerLink="/manager/workflows/">Workflows</a>
+              <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 5l7 7-7 7" stroke-width="3"/></svg>
+              <span class="text-zinc-400 dark:text-zinc-500">Instance View</span>
+            </nav>
+            <h1 class="text-4xl md:text-5xl font-black text-zinc-900 dark:text-white tracking-tighter uppercase">
+              {{ wf.workflowName }}
+            </h1>
+            <div class="flex items-center gap-4 mt-2">
+              <span [class]="'px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border-2 ' + workflowStatus.class">
+                {{ workflowStatus.label }}
               </span>
-            </p-step>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-start md:items-end gap-3">
+            <h3 class="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Project Contributors</h3>
+            <div class="flex -space-x-3">
+              @for (user of allAssigness(); track user.userId) {
+                <div class="flex gap-2 items-center text-sm font-mono">
+                        <div class=" h-7 w-7 rounded-2xl ring-4 ring-zinc-50 dark:ring-zinc-950 bg-indigo-600 flex items-center justify-center text-white font-black text-xs border border-white/20 hover:-translate-y-1 transition-transform cursor-pointer" [title]="user.userName">
+                  {{ user.userName.substring(0,2).toLocaleLowerCase() }}  
+                </div>
+                    {{user.email}}
+                </div>
             
-            <p-step-panel>
-              <ng-template #content let-activateCallback="activateCallback">
-                <div class="min-w-90 w-full mt-6 p-8 bg-gradient-to-br from-slate-50 to-slate-100/50 dark:from-zinc-800/50 dark:to-zinc-900/50 border border-slate-300 dark:border-zinc-700 rounded-2xl max-h-[70vh] flex flex-col overflow-hidden">
-                  
-                  <div class="relative flex items-center justify-between mb-8 flex-shrink-0">
-                    <h3 class="text-lg font-bold text-slate-800 dark:text-zinc-100 uppercase tracking-tight">
-                      Tasks ({{ workflowStep.task.length }})
-                    </h3>
-                    <app-new-task-dialog
+                
+              }
+            </div>
+          </div>
+        </header>
+
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-[2.5rem] overflow-hidden">
+          <p-stepper [value]="currentIndex()" class="custom-stepper">
+            @for (workflowStep of wf.workflowSteps; track $index) {
+              <p-step-item [value]="$index + 1" >
+                <p-step class="px-8 py-6 hover:bg-zinc-50 dark:hover:bg-zinc-800/30 transition-colors cursor-pointer border-b border-zinc-100 dark:border-zinc-800/50">
+                  <div class="flex items-center justify-between w-full gap-2 items-center">
+                    <div class="flex items-center gap-4">
+                      <span class="text-lg font-bold text-zinc-800 dark:text-zinc-100 tracking-tight">{{ workflowStep.stepName }}</span>
+                    </div>
+                    <span [class]="'px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ' + workflowStepStatusConfig[workflowStep.status].class">
+                      {{ workflowStepStatusConfig[workflowStep.status].label }} 
+                    </span>
+                  </div>
+                </p-step>
+                
+                <p-step-panel>
+                  <ng-template #content let-activateCallback="activateCallback">
+                    <div class="p-6 md:p-10 bg-zinc-50/50 dark:bg-zinc-950/30 flex flex-col max-h-[75vh]">
+                                 <app-new-task-dialog
   [isOpen]="dialogOpen"
   [isLoading]="isUpdating"
   [workflowStepId]="workflowStep.workflowStepId"
   [allUsers]="allUsers"
   (confirm)="onNewTaskCreationRequest($event)"
   (cancel)="onNewTaskDialogCancel()"
+  [workflowStepName]="workflowStep.stepName">
+</app-new-task-dialog>
 
-  >
-                    </app-new-task-dialog>
-                    <div class="inline-flex shadow-md rounded-lg overflow-hidden border border-slate-300 dark:border-zinc-700">
-                      <button (click)="toggleNewTaskDialog()" class="px-4 py-2 text-sm font-bold bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:from-indigo-700 hover:to-blue-700 transition-all shadow-sm hover:shadow-md">
-                        + New Task
-                      </button>
-                                <!-- -->
-                      <button 
-               (click)="toggleDropdown(workflowStep.workflowStepId)"
-                        [disabled]="isUpdating()"
-                        type="button"
-                        class="px-4 py-2 text-sm font-bold bg-white dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border-l border-slate-300 dark:border-zinc-700 hover:bg-slate-100 dark:hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                        {{ isUpdating() ? 'Updating...' : 'Change Status' }} 
-                      </button>
-         
-
-                      @if (openDropdownId() && openDropdownId() === workflowStep.workflowStepId) {
-                        <div class="absolute top-full z-100 right-0 mt-2 w-48 bg-white dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 rounded-lg shadow-lg ">
-      
-                            @for (option of stepStatusOptions; track option.value) {
-                            <button
-                              (click)="updateStepStatus(workflowStep.workflowStepId, option.value)"
-                              [disabled]="isUpdating()"
-                              type="button"
-                              class="w-full text-left px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-zinc-300 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-colors first:rounded-t-lg last:rounded-b-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                              [class.bg-indigo-100]="workflowStep.status === option.value"
-                              [class.dark:bg-indigo-500/20]="workflowStep.status === option.value">
-                              {{ option.label }}
-                            </button>
-                          }
+<app-update-reject-workflow-step
+[isOpen]="rejectDialogOpenFlag"
+[tasks]="workflowStep.task"
+[workflowId]="workflow()!.workflowId"
+[workflowStepId]="workflowStep.workflowStepId"
+(cancel)="handleRejectDialogClose()"
+></app-update-reject-workflow-step>
+                        @if (workflowStep.task.length > 0) {
+                      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10 shrink-0">
+                        <div>
+                          <h3 class="text-[11px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Step Operations</h3>
+                          <p class="text-sm font-bold text-zinc-800 dark:text-zinc-200">{{ workflowStep.task.length }} total deliverables</p>
                         </div>
-                      }
-                    </div>
-                  </div>
-
-                  <div class="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-zinc-700 pr-2">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      @for (task of workflowStep.task; track task.taskId) {
-                        @let dueDateInfo = getDueDateInfo(task.taskId);
-                        <div class="bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-xl p-5 shadow-md hover:shadow-xl hover:border-indigo-400 dark:hover:border-indigo-500 transition-all duration-300 group cursor-pointer">
+                               <div class="flex items-center gap-3">
+                        @if(workflowStep.status !== "APPROVED"){
+                              <button (click)="toggleNewTaskDialog()" 
+                                  class="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M12 4v16m8-8H4"/></svg>
+                            New Task
+                          </button>
+                        }
                           
-                          <div class="flex justify-between items-start mb-3">
-                            <h4 class="font-bold text-slate-800 dark:text-zinc-100 truncate pr-2 underline underline-offset-4 decoration-dotted group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" [title]="task.title">
-                             <a routerLink="/manager/workflows/1/task/{{task.taskId}}"  > {{ task.title }}</a>
-                            </h4>
-                            <span [class]="'px-2.5 py-1 rounded-lg text-[10px] font-bold border uppercase tracking-wider flex-shrink-0 ' + taskStatusConfig[task.status].class">
-                              {{ taskStatusConfig[task.status].label }}
-                            </span>
-                          </div>
+                          <div class="relative inline-flex">
+                            <button (click)="toggleDropdown(workflowStep.workflowStepId)"
+                                    [disabled]="isUpdating()"
+                                    class="px-6 py-3 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 text-[11px] font-black uppercase tracking-widest rounded-2xl transition-all hover:border-indigo-500 disabled:opacity-50">
+                              {{ isUpdating() ? 'Updating...' : 'Change Status' }} 
+                            </button>
 
-                          <div class="mb-4">
-                            <span [class]="'px-2 py-1 rounded-md text-[10px] font-bold border ' + priorityConfig[task.priority].class">
-                              {{ priorityConfig[task.priority].label }} Priority
-                            </span>
-                          </div>
-
-                          <p class="text-sm text-slate-600 dark:text-zinc-400 line-clamp-2 mb-5 h-10 leading-relaxed">
-                            {{ task.description }}
-                          </p>
-
-                          <div class="pt-4 border-t border-slate-100 dark:border-zinc-700">
-                            <div class="flex flex-col gap-3 text-xs">
-                              <div class="flex justify-between items-center">
-                                <span class="text-slate-500 dark:text-zinc-500 font-medium">Assigned To:</span>
-                                <span class="font-semibold text-slate-700 dark:text-zinc-200 truncate bg-indigo-100/50 dark:bg-indigo-900/30 px-2 py-1 rounded-md">
-                                  {{ task.assignedToUser.userName }}
-                                </span>
+                            @if (openDropdownId() === workflowStep.workflowStepId) {
+                              <div class="absolute top-full right-0 mt-2 w-56 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl z-[100] overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                                @for (option of stepStatusOptions; track option.value) {
+                                  <button (click)="updateStepStatus(workflowStep.workflowStepId, option.value)"
+                                          class="w-full text-left px-5 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors border-b border-zinc-100 dark:border-zinc-800 last:border-0"
+                                          [class.bg-indigo-50]="workflowStep.status === option.value"
+                                          [class.dark:bg-indigo-500/10]="workflowStep.status === option.value">
+                                    {{ option.label }}
+                                  </button>
+                                }
                               </div>
-
-                              @if (dueDateInfo) {
-                                <div class="flex justify-between items-center">
-                                  <span class="text-slate-500 dark:text-zinc-500 font-medium">Due Date:</span>
-                                  <div class="flex flex-col items-end gap-1">
-                                    <span [class]="'px-2 py-1 rounded-md font-semibold border ' + dueDateInfo.class">
-                                      {{ dueDateInfo.label }}
-                                    </span>
-                                    <span class="text-[9px] text-slate-500 dark:text-slate-400">
-                                      {{ formatDate(task.dueDate) }}
-                                    </span>
-                                  </div>
-                                </div>
-                              }
-                            </div>
+                            }
                           </div>
+               
                         </div>
-                      }
+                        
                     </div>
-                  </div>
-                </div>
-              </ng-template>
-            </p-step-panel>
-          </p-step-item>
-        }
-      </p-stepper>
+                }
+
+                      <div class="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-zinc-200 dark:scrollbar-thumb-zinc-800">
+                        @if (workflowStep.task.length > 0) {
+                          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-6">
+                            @for (task of workflowStep.task; track task.taskId) {
+                              @let dueDateInfo = getDueDateInfo(task.taskId);
+                              <div class="group bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 p-6 rounded-[2.25rem] shadow-sm hover:shadow-xl hover:border-indigo-500/30 transition-all duration-300 flex flex-col h-full">
+                                <div class="flex justify-between items-start mb-6">
+                                  <span [class]="'px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-tighter border ' + taskStatusConfig[task.status].class">
+                                    {{ taskStatusConfig[task.status].label }}
+                                  </span>
+                                  <div [class]="'w-2 h-2 rounded-full ' + priorityConfig[task.priority].class"></div>
+                                </div>
+
+                                <h4 class="text-lg font-black text-zinc-900 dark:text-white mb-2 leading-tight">
+                                  <a [routerLink]="['/manager/workflows/1/task', task.taskId]" class="hover:text-indigo-500 transition-colors"> 
+                                    {{ task.title }}
+                                  </a>
+                                </h4>
+
+                                <p class="text-[13px] text-zinc-500 dark:text-zinc-400 line-clamp-3 mb-8 flex-grow leading-relaxed font-medium">
+                                  {{ task.description }}
+                                </p>
+
+                                <div class="pt-5 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-between">
+                                  <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center text-[10px] font-black text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-500/20">
+                                      {{ task.assignedToUser.userName.charAt(0).toUpperCase() }}
+                                    </div>
+                                    <div class="flex flex-col">
+                                      <span class="text-[11px] font-black text-zinc-900 dark:text-zinc-100">{{ task.assignedToUser.userName }}</span>
+                                      <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Assignee</span>
+                                    </div>
+                                  </div>
+                                  
+                             @if (dueDateInfo) {
+  <div class="flex flex-col items-end gap-1.5">
+    <span [class]="'px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider border ' + dueDateInfo.class">
+      {{ dueDateInfo.label }}
+    </span>
+    
+    <div class="flex items-center gap-1.5 px-2 py-1 bg-zinc-100 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-700/50 rounded-lg">
+      <svg class="w-3 h-3 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+      <span class="text-[10px] text-zinc-600 dark:text-zinc-300 font-bold tabular-nums">
+        {{ formatDate(task.dueDate) }}
+      </span>
     </div>
-  }
+  </div>
 }
-
-<div class="max-w-7xl mx-auto mt-8">
-  <!-- Additional content section -->
+                                </div>
+                              </div>
+                            }
+                          </div>
+                        } @else {
+                          <div class="flex flex-col items-center justify-center py-20 px-6 text-center bg-white dark:bg-zinc-900/50 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-[3rem]">
+                            <div class="w-10 h-10 rounded-3xl bg-zinc-50 dark:bg-zinc-800 flex items-center justify-center mb-6">
+                              <svg class="w-10 h-10 text-zinc-300 dark:text-zinc-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                              </svg>
+                            </div>
+                            <h3 class="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">No tasks in this step</h3>
+                            <p class="text-zinc-500 dark:text-zinc-400 max-w-xs mt-2 text-sm font-medium">Ready to start? Create your first task to move this workflow forward.</p>
+                            <button (click)="toggleNewTaskDialog()" 
+                                    class="mt-8 px-8 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-[10px] font-black uppercase tracking-widest rounded-2xl hover:scale-105 transition-all">
+                              + Create First Task
+                            </button>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-step-panel>
+              </p-step-item>
+            }
+          </p-stepper>
+        </div>
+      </div>
+    }
+  }
 </div>
 
-
-</div>
 
 
 <app-confirm-dialog
-[isOpen]="changeStatusDialogOpenerFlag"
-[isLoading]="isLoading"
-message="This action will change the status of this step"
-(confirm)="onDialogConfirm()"
-(cancel)="onDialogCancel()"
+  [isOpen]="changeStatusDialogOpenerFlag"
+  [isLoading]="isLoading"
+  message="This action will change the status of this step"
+  (confirm)="onDialogConfirm()"
+  (cancel)="onDialogCancel()">
+</app-confirm-dialog>
 
-></app-confirm-dialog>
+
+

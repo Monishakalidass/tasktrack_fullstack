@@ -1,50 +1,71 @@
-<div class="min-h-screen flex items-center justify-center bg-zinc-950 px-4 relative">
-  <div class="absolute w-64 h-64 bg-indigo-600/10 rounded-full blur-[100px]"></div>
+<div class="min-h-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950 px-4 relative overflow-hidden transition-colors duration-500">
+  
+  <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-indigo-600/5 dark:bg-indigo-500/10 rounded-full blur-[120px]"></div>
+  <div class="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-zinc-900/5 dark:bg-zinc-100/5 rounded-full blur-[100px]"></div>
 
-  <div class="w-full max-w-sm z-10">
-    <div class="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 p-6 rounded-2xl shadow-2xl">
-      <div class="text-center mb-6">
-        <h2 class="text-2xl font-bold text-white tracking-tight">Register</h2>
-        <p class="text-zinc-500 text-xs mt-1">Join the TaskTrack platform</p>
+  <div class="w-full max-w-xl z-10">
+    <div class="bg-white dark:bg-zinc-900/80 backdrop-blur-2xl border border-zinc-200 dark:border-zinc-800 p-10 md:p-14 rounded-[3rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)] dark:shadow-2xl">
+      
+      <div class="flex flex-col items-center mb-10">
+        <div class="flex h-14 w-14 items-center justify-center rounded-[1.25rem] bg-zinc-900 dark:bg-white mb-6 shadow-xl shadow-indigo-500/20">
+          <span class="text-2xl font-black text-white dark:text-zinc-950">T</span>
+        </div>
+        <h2 class="text-3xl font-black text-zinc-900 dark:text-white tracking-tighter uppercase mb-2">
+          Sign Up
+        </h2>
       </div>
 
-      <form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="space-y-3.5">
-        <div>
-          <label class="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1 ml-1">Username</label>
-          <input type="text" formControlName="userName" 
-                 class="w-full bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-2.5 text-sm text-white focus:ring-2 focus:ring-indigo-500/50 outline-none">
+      <form [formGroup]="signupForm" (ngSubmit)="onSignup()" class="space-y-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-1.5">
+            <label class="block text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] ml-2">Username</label>
+            <input type="text" formControlName="userName" placeholder="j.doe"
+                   class="w-full bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="block text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] ml-2">Email Address</label>
+            <input type="email" formControlName="email" placeholder="operator@tasktrack.io"
+                   class="w-full bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
+          </div>
         </div>
 
-        <div>
-          <label class="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1 ml-1">Email</label>
-          <input type="email" formControlName="email" 
-                 class="w-full bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-2.5 text-sm text-white focus:ring-2 focus:ring-indigo-500/50 outline-none">
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-1.5">
+            <label class="block text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] ml-2">Password</label>
+            <input type="password" formControlName="password" placeholder="••••••••"
+                   class="w-full bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-3.5 text-sm text-zinc-900 dark:text-white placeholder:text-zinc-400 dark:placeholder:text-zinc-600 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all">
+          </div>
 
-        <div>
-          <label class="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1 ml-1">Password</label>
-          <input type="password" formControlName="password" 
-                 class="w-full bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-2.5 text-sm text-white focus:ring-2 focus:ring-indigo-500/50 outline-none">
-        </div>
-
-        <div>
-          <label class="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-1 ml-1">Department</label>
-          <select formControlName="department" 
-                  class="w-full bg-zinc-800/40 border border-zinc-700/50 rounded-xl px-4 py-2.5 text-sm text-white focus:ring-2 focus:ring-indigo-500/50 outline-none appearance-none cursor-pointer">
-            <option value="" disabled selected class="bg-zinc-900">Select Dept</option>
-            <option *ngFor="let dept of departmentOptions" [value]="dept" class="bg-zinc-900">{{dept}}</option>
-          </select>
+          <div class="space-y-1.5">
+            <label class="block text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-[0.2em] ml-2">Department</label>
+            <div class="relative">
+              <select formControlName="department" 
+                      class="w-full bg-zinc-50 dark:bg-zinc-800/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl px-5 py-3.5 text-sm text-zinc-900 dark:text-white outline-none appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all">
+                <option value="" disabled selected>Select Dept</option>
+                <option *ngFor="let dept of departmentOptions" [value]="dept" class="dark:bg-zinc-900">{{dept}}</option>
+              </select>
+              <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M19 9l-7 7-7-7"/></svg>
+              </div>
+            </div>
+          </div>
         </div>
 
         <button type="submit" [disabled]="signupForm.invalid"
-                class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold py-2.5 rounded-xl transition-all active:scale-95 disabled:opacity-50">
+                class="w-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 text-[11px] font-black uppercase tracking-[0.2em] py-5 mt-4 rounded-2xl transition-all hover:bg-indigo-600 dark:hover:bg-indigo-500 dark:hover:text-white shadow-xl shadow-indigo-500/10 active:scale-[0.98] disabled:opacity-30 disabled:grayscale">
           Sign Up
         </button>
       </form>
 
-      <div class="mt-6 text-center text-xs">
-        <span class="text-zinc-500">Already a member?</span>
-        <a routerLink="/login" class="text-indigo-400 font-bold ml-1 hover:text-indigo-300">Log In</a>
+      <div class="mt-10 text-center">
+        <p class="text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">
+          Existing user? 
+          <a routerLink="/login" class="text-indigo-500 hover:text-indigo-400 ml-1 transition-colors">
+            Return to Login
+          </a>
+        </p>
       </div>
     </div>
   </div>

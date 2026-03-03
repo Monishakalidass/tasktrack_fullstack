@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { WorkflowService, UpdateWorkflowStepRequest } from '../../../../../../../core/services/workflow.service';
+import { WorkflowService } from '../../../../../../../core/services/workflow.service';
+import { UpdateWorkflowStepRequest } from '../../../../../../../shared/models/workflow.model';
 import { Priority, PriorityConfig, TaskStatusConfig, WorkflowDTO, WorkflowStepStatus, WorkflowStepStatusConfig } from '../../../../../../../shared/models/workflow.model';
 import { HeaderComponent } from '../../../../../../../shared/components/header/header';
 import { StatusConfig } from '../../../../../../../shared/models/workflow.model';
@@ -19,9 +20,10 @@ import { NewTaskData } from '../../../../../../../shared/models/newTask.model';
 import { TaskService } from '../../../../../../../core/services/task.service';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem, MessageService } from 'primeng/api';
+import { RejectWorkflowStepStatusComponent } from '../../../../../../../shared/components/dialog/update-reject-workflow-status.component';
 @Component({
   selector: 'app-view-workflow',
-  imports: [InputTextModule,HeaderComponent, ConfirmDialogComponent,  MenuModule, StepperModule, ButtonModule, CommonModule, RouterLink, DialogModule, TaskDialogComponent],
+  imports: [RejectWorkflowStepStatusComponent,InputTextModule,HeaderComponent, ConfirmDialogComponent,  MenuModule, StepperModule, ButtonModule, CommonModule, RouterLink, DialogModule, TaskDialogComponent],
   templateUrl: './view-workflow.html',
   standalone: true,
   styleUrl: './view-workflow.css',
@@ -32,10 +34,16 @@ export default class ViewWorkflow {
   private route = inject(ActivatedRoute);
   isLoading = signal(true);
   isUpdating = signal(false);
+
+  rejectDialogOpenFlag = signal(false)
   private destroy$ = new Subject<void>();
   private workflowService = inject(WorkflowService);
   private dueDateService = inject(DueDateService);
   private cdr = inject(ChangeDetectorRef);
+
+
+  workFlowStepToAddTaskTo = signal<null| number>(null)
+
   isNewTaskDialogVisible = false;
   dialogOpen = signal(false);
   changeStatusDialogOpenerFlag = signal(false)
@@ -59,6 +67,7 @@ allUsers!: UserResponseDto[]
   ];
 
 
+  
  allAssigness = computed(() => {
   const currentWorkflow = this.workflow();
 
@@ -77,13 +86,11 @@ return uniqueUsers;
 
   // 2. Find the index
   const stepIndex = currentWorkflow.workflowSteps.findIndex(
-    el => el.workflowStepId === currentWorkflow.currentStep
+    el => el.status == "PENDING"
   );
 
-  // 3. Logic: If found (not -1), return it. Otherwise, default to 0.
-  console.log("Current Step Index found:", stepIndex);
-  
-  return stepIndex === -1 ? 0 : stepIndex + 1;
+console.log(stepIndex, currentWorkflow.workflowSteps)
+  return stepIndex === -1 ? currentWorkflow.workflowSteps.length  : stepIndex + 1;
 });
   dueDateMap = computed(() => {
     const currentWorkflow = this.workflow();
@@ -162,15 +169,23 @@ return uniqueUsers;
   }
 
   updateStepStatus(stepId: number, newStatus: WorkflowStepStatus): void {
-    this.selectedStepId.set(stepId);
+     if(newStatus == WorkflowStepStatus.REJECTED) {
+    this.rejectDialogOpenFlag.set(true)
+   } else {
+   this.selectedStepId.set(stepId);
     this.selectedStatus.set(newStatus);
     this.dialogStatusLabel.set(
       this.stepStatusOptions.find(opt => opt.value === newStatus)?.label || ''
     );
     this.openDropdownId.set(null);
    this.changeStatusDialogOpenerFlag.set(true)
+   }
+ 
+  
   }
-
+handleRejectDialogClose() {
+  this.rejectDialogOpenFlag.set(false)
+}
   onDialogConfirm(): void {
     const wf = this.workflow();
     if (!wf || !this.selectedStepId() || !this.selectedStatus()) return;
