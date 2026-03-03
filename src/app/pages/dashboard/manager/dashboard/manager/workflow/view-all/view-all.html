@@ -56,7 +56,7 @@
 
               <td class="px-6 py-5 text-sm text-slate-600 dark:text-zinc-400">
                 <span class="font-semibold text-indigo-500 dark:text-indigo-400">
-                  {{ workflow.workflowSteps[workflow.currentStep]?.stepName || 'N/A' }}
+                  {{ workflow.workflowSteps.find(el => el.workflowStepId === workflow.currentStep)?.stepName  || "N/A"}}
                 </span>
               </td>
 
@@ -73,7 +73,11 @@
               <td class="w-60 px-6 py-5 text-sm text-slate-500 dark:text-zinc-500 ">
                 <ul class="space-y-1 list-decimal list-inside">
                   @for (workflowStep of workflow.workflowSteps; track workflowStep.workflowStepId) {
-                    <li [class.text-indigo-600]="workflowStep.status === 'IN_PROGRESS'" 
+                    <li [class.text-grey-600]="workflowStep.status === 'PENDING'" 
+
+                    [class.text-green-600]="workflowStep.status === 'APPROVED'" 
+
+                    [class.text-red-600]="workflowStep.status === 'REJECTED'" 
                         class="transition-colors">
                       {{workflowStep.stepName}}
                     </li>

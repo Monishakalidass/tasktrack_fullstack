@@ -59,8 +59,7 @@ export const routes: Routes = [
           { 
         path: 'workflows/:workflowId', 
         // Ensure this path matches your actual folder/file name exactly
-        redirectTo: "workflows"
-        // loadComponent: () => import('./pages/dashboard/manager/dashboard/manager/workflow/view-all/view-all').then(m => m.ViewAll) 
+        loadComponent: () => import('./pages/dashboard/manager/dashboard/manager/workflow/view-workflow/view-workflow')
       },
 
     ]

@@ -22,7 +22,6 @@ providePrimeNG({
             }
         }
     },
-    unstyled: true
 })
 
   ]
