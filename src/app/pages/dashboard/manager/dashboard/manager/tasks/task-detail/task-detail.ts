@@ -125,7 +125,6 @@ export default class TaskDetail {
 
   subtaskForm = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    assignedToUserId: new FormControl<number | null>(null, [Validators.required]),
     status: new FormControl('OPEN'),
   });
 
@@ -144,7 +143,6 @@ export default class TaskDetail {
   const formValues = this.subtaskForm.getRawValue();
   const payload: SubTaskCreateDTO = {
     title: formValues.title!,
-    assignedToUserId: formValues.assignedToUserId!,
     status: Status.Open,
     taskId: this.task()!.taskId,
   };
