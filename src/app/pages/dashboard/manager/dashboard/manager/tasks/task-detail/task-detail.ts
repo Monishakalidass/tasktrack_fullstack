@@ -34,9 +34,12 @@ export default class TaskDetail {
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
   private dueDateService = inject(DueDateService);
+  private authService = inject(AuthService);
   private taskService = inject(TaskService);
   private userService = inject(AdminService);
   private commentService = inject(CommentService);
+
+  public role:string = '';
   task = signal<TaskData | null>(null);
   user = signal<UserDTO | null>(null);
   dueDate = signal<DueDateInfo | null>(null);
@@ -55,7 +58,7 @@ export default class TaskDetail {
     }
   }
 
-
+  isManager = signal(false);
 
   constructor() {
     this.taskId = this.route.snapshot.paramMap.get('taskId');
@@ -85,6 +88,13 @@ export default class TaskDetail {
       toast.error("Error Loading tasks")
       },
     });
+  }
+
+  getRole(){
+    this.role = this.authService.getRoleFromToken();
+    if(this.role == "MANAGER"){
+      this.isManager.set(true);
+    }
   }
 
   toggleSubStatus(taskId: number, subTaskId: number, currentStatus: string) {
