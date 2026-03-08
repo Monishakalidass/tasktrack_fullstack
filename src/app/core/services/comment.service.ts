@@ -24,7 +24,7 @@ export class CommentService {
   }
 
   getAllCommentsForByPolling(taskId:number):Observable<Comment[]> {
-    return timer(0, 1000).pipe(switchMap(() => this.getCommentsByTask(taskId)),  shareReplay(1))
+    return timer(0, 1000).pipe(switchMap(() => this.getCommentsByTask(taskId)))
    
   }
 }

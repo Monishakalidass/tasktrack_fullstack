@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { WorkflowService } from '../../../../../../../core/services/workflow.service';
@@ -20,13 +20,14 @@ import { NewTaskData } from '../../../../../../../shared/models/newTask.model';
 import { TaskService } from '../../../../../../../core/services/task.service';
 import { MenuModule } from 'primeng/menu';
 import { MenuItem, MessageService } from 'primeng/api';
+import { toast } from 'ngx-sonner';
 import { RejectWorkflowStepStatusComponent } from '../../../../../../../shared/components/dialog/update-reject-workflow-status.component';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-view-workflow',
   imports: [RejectWorkflowStepStatusComponent,InputTextModule,HeaderComponent, ConfirmDialogComponent,  MenuModule, StepperModule, ButtonModule, CommonModule, RouterLink, DialogModule, TaskDialogComponent],
   templateUrl: './view-workflow.html',
   standalone: true,
-  styleUrl: './view-workflow.css',
 })
 export default class ViewWorkflow {
    items: MenuItem[] | undefined;
@@ -108,6 +109,7 @@ console.log(stepIndex, currentWorkflow.workflowSteps)
   constructor(private userService:AdminService,private taskService:TaskService) {
     this.workflowId = this.route.snapshot.paramMap.get('workflowId');
 
+
   }
 
   ngOnInit(): void {
@@ -138,6 +140,8 @@ console.log(stepIndex, currentWorkflow.workflowSteps)
         },
         error: (err) => {
           console.error('Error fetching workflow:', err);
+           toast.error("Error fetching workflows", {description: "We encoutered an error while fething all workflows, please try again later"})
+                    
           this.isLoading.set(false);
         },
         complete: () => {
@@ -155,9 +159,13 @@ console.log(stepIndex, currentWorkflow.workflowSteps)
         this.isUpdating.set(false)
         this.dialogOpen.set(false);
         this.getWorkflow()
+         toast.success("Created new task", {description: "A new task was created under workflow step id: " + taskData.workflowStepId})
+          
       } ,
       error: (err) => {
         console.log(err)
+         toast.error("Error new task", {description: "We encoutered an error while create new task, please try again later"})
+          
       }
     })
 
@@ -183,7 +191,12 @@ console.log(stepIndex, currentWorkflow.workflowSteps)
  
   
   }
-handleRejectDialogClose() {
+handleRejectDialogClose(success: boolean) {
+  if(success) {
+    this.getWorkflow()
+        this.openDropdownId.set(null);
+        toast.success("Workflow Step status updated")
+  }
   this.rejectDialogOpenFlag.set(false)
 }
   onDialogConfirm(): void {
@@ -204,11 +217,15 @@ handleRejectDialogClose() {
            this.changeStatusDialogOpenerFlag.set(false)
           this.getWorkflow();
           this.isUpdating.set(false);
+           toast.success("Workflow Step Status changed", {description: "Workflow Step status changed to " + this.selectedStatus()!})
+          
           //TODO Add sonnar setup
         },
-        error: (err) => {
-          console.error('Error updating workflow step:', err);
+        error: (err:HttpErrorResponse) => {
+          console.error('Error updating workflow step:', );
+          
           this.isUpdating.set(false);
+          toast.error("Error Updating Status", {description: err.error.error})
            //TODO Add sonnar setup
         }
       });

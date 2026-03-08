@@ -7,6 +7,8 @@ import { UserResponseDto } from '../../models/user.model';
 import { form, FormField, min, required } from '@angular/forms/signals';
 import { WorkflowService } from '../../../core/services/workflow.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { toast } from 'ngx-sonner';
 // Matches the wireframe's intent for a new task
 
 
@@ -114,7 +116,7 @@ export class RejectWorkflowStepStatusComponent {
   @Input() tasks!:TaskDTO[];
     @Input() workflowId!:number;  
     @Input() workflowStepId!:number;
-  @Output() cancel = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<boolean>();
   isLoading = signal(false)
   constructor(private workflowService: WorkflowService){}
   updateWorkflowStepData= signal<UpdateWorkflowStepRequest>({
@@ -153,16 +155,17 @@ export class RejectWorkflowStepStatusComponent {
                 this.workflowService.getWorkflowById(this.workflowId);
                 this.isLoading.update(v => !v);
                 this.isOpen.set(false)
- this.cancel.emit();
+ this.cancel.emit(true);
                 
            
         },
-        error: (err) => {
+        error: (err:HttpErrorResponse) => {
             //TODO add toast
+                   toast.error("Error Updating Status", {description: err.error.error})
             this.isLoading.update(v => !v);
         }
       })
-      this.isLoading.update(v => !v);
+
    
 
       // TODO sonnar error handling
@@ -170,7 +173,7 @@ export class RejectWorkflowStepStatusComponent {
   }
 
   onCancel(): void {
-    this.cancel.emit();
+    this.cancel.emit(false);
     
     this.updateWorkflowStepData.set(this.resetForm())
     this.isOpen.set(false);

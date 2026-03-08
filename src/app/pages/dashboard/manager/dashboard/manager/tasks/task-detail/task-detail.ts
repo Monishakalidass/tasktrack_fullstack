@@ -50,6 +50,10 @@ export default class TaskDetail {
   formText: string = '';
   managerUserId?: number;
   private commentsSubscriber?:Subscription;
+
+  ngOnDestroy(): void {
+    this.commentsSubscriber?.unsubscribe()
+  }
   ngOnInit(): void {
     if (this.taskId) {
       this.getTaskById();
@@ -86,7 +90,7 @@ export default class TaskDetail {
       },
       error: (err) => {
         console.log(err.error);
-      toast.error("Error Loading tasks")
+    
       },
     });
   }
@@ -288,5 +292,7 @@ changeTaskStatus(newStatus: string) {
     }
   });
 }
+
+  
 
 }

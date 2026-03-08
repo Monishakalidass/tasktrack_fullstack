@@ -7,6 +7,7 @@ import { UserResponseDto } from '../../models/user.model';
 import { form, FormField, min, required } from '@angular/forms/signals';
 import { WorkflowService } from '../../../core/services/workflow.service';
 import { Router } from '@angular/router';
+import { toast } from 'ngx-sonner';
 // Matches the wireframe's intent for a new task
 
 
@@ -132,8 +133,9 @@ export class NewWorkflowDialog {
                 //TODO Add toast 
                 this.isLoading.update(v => !v);
                 this.isOpen.set(false)
-
+    
                 this.route.navigate(["/manager/workflows/" + workflowId]);
+
             } else {
                 //todo add toast
             }

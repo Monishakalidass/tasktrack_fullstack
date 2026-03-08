@@ -7,12 +7,11 @@ import { WorkflowService } from '../../../../../../../core/services/workflow.ser
 import { WorkflowDTO } from '../../../../../../../shared/models/workflow.model';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
+import { toast } from 'ngx-sonner';
 @Component({
   selector: 'app-view-all',
   imports: [HeaderComponent, ButtonModule, RouterLink, TableModule, CommonModule],
-  templateUrl: './view-all.html',
-  styleUrl: './view-all.css',
+  templateUrl: './view-all.html'
 })
 export class ViewAll implements OnInit, OnDestroy {
   workflows: WorkflowDTO[] = [];
@@ -39,6 +38,8 @@ export class ViewAll implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.error('Error fetching workflows:', err);
+           toast.error("Error fetching workflows", {description: "We encoutered an error while fething all workflows, please try again later"})
+                    
           this.isLoading = false;
         },
         complete: () => {

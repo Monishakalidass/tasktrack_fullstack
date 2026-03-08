@@ -39,11 +39,13 @@ toggleNewWorkflowDialogCancel() {
           console.log('Full response:', res);
           this.workflowTemplates = Array.isArray(res) ? res : res.data || [];
           console.log('Workflows after assignment:', this.workflowTemplates);
+    
           this.isLoading = false;
            this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('Error fetching workflows:', err);
+          toast.error("Error fetching workflows", {description: "We encoutered an error while fething all workflows, please try again later"})
           this.isLoading = false;
         },
         complete: () => {
